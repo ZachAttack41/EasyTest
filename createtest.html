@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Test - EasyTest</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #3498db;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            color: #333;
+            font-size: 18px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #217dbb;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="post" action="/create_test">
+        <h1>Create Test</h1>
+
+        <!-- Question input fields with dropdown for correct answer -->
+        <div class="question-container">
+            <label style="font-size: 24px; color: #3498db;" for="question">Question 1:</label>
+            <input type="text" id="question" name="question[]" required>
+            <br>
+            <label for="answerA">Answer A:</label>
+            <input type="text" id="answerA" name="answerA[]" required>
+            <br>
+            <label for="answerB">Answer B:</label>
+            <input type="text" id="answerB" name="answerB[]" required>
+            <br>
+            <label for="answerC">Answer C:</label>
+            <input type="text" id="answerC" name="answerC[]" required>
+            <br>
+            <label for="answerD">Answer D:</label>
+            <input type="text" id="answerD" name="answerD[]" required>
+            <br>
+            <label for="correctAnswer">Correct Answer:</label>
+            <select id="correctAnswer" name="correctAnswer[]">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+        </div>
+
+        <!-- Button to add more questions -->
+        <button type="button" onclick="addQuestion()">Add Another Question</button>
+        <br>
+
+        <!-- Submit button with validation -->
+        <button type="button" onclick="validateAndRedirect()">Create Test</button>
+    </form>
+
+    <!-- Updated JavaScript function -->
+    <script>
+        let questionNumber = 2;  // Start with question 2 since the first question is already present
+
+        // JavaScript function to dynamically add more question fields
+        function addQuestion() {
+            const form = document.querySelector('form');
+            const newQuestion = document.createElement('div');
+            newQuestion.className = 'question-container';  // Add a class for styling
+            newQuestion.innerHTML = `
+                <label style="font-size: 24px; color: #3498db;" for="question">Question ${questionNumber}:</label>
+                <input type="text" id="question" name="question[]" required>
+                <br>
+                <label for="answerA">Answer A:</label>
+                <input type="text" id="answerA" name="answerA[]" required>
+                <br>
+                <label for="answerB">Answer B:</label>
+                <input type="text" id="answerB" name="answerB[]" required>
+                <br>
+                <label for="answerC">Answer C:</label>
+                <input type="text" id="answerC" name="answerC[]" required>
+                <br>
+                <label for="answerD">Answer D:</label>
+                <input type="text" id="answerD" name="answerD[]" required>
+                <br>
+                <label for="correctAnswer">Correct Answer:</label>
+                <select id="correctAnswer" name="correctAnswer[]">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            `;
+            form.insertBefore(newQuestion, form.lastElementChild);
+            questionNumber++;
+        }
+
+        function validateAndRedirect() {
+            // You can add more specific validation as needed
+            const questionInput = document.getElementById('question');
+            const answerAInput = document.getElementById('answerA');
+            const answerBInput = document.getElementById('answerB');
+            const answerCInput = document.getElementById('answerC');
+            const answerDInput = document.getElementById('answerD');
+
+            if (
+                questionInput.value.trim() === '' ||
+                answerAInput.value.trim() === '' ||
+                answerBInput.value.trim() === '' ||
+                answerCInput.value.trim() === '' ||
+                answerDInput.value.trim() === ''
+            ) {
+                // If any of the required fields are empty, don't redirect
+                alert('Please fill in all question and answer fields.');
+            } else {
+                // If all required fields are filled, proceed with redirection
+                redirectToHowManyVersions();
+            }
+        }
+
+        function redirectToHowManyVersions() {
+            window.location.href = 'howmanyversions.html';
+        }
+    </script>
+</body>
+
+</html>
